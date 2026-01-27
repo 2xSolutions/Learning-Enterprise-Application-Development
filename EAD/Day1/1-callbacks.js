@@ -17,7 +17,15 @@ function sayGoodbye() {
 // Using callback
 greet("Alice", sayGoodbye);
 
+// OUTPUT:
+// Hello, Alice
+// Goodbye!
+
 console.log("\n--- Practical Example: File Operations ---\n");
+// OUTPUT:
+// 
+// --- Practical Example: File Operations ---
+// 
 
 // Simulating file reading (blocking operation)
 function readFile(filename, callback) {
@@ -39,7 +47,16 @@ readFile("data.txt", (error, data) => {
   }
 });
 
+// OUTPUT SEQUENCE (happens over 1 second):
+// Line 1 (immediate): Reading file: data.txt...
+// Line 2 (after 1000ms): File content: "This is data.txt"
+// Line 3 (after 1000ms): Received data: Content of data.txt
+
 console.log("\n--- Callback Hell Example ---\n");
+// OUTPUT:
+// 
+// --- Callback Hell Example ---
+// 
 
 // Problem: Nested callbacks (Callback Hell / Pyramid of Doom)
 function task1(callback) {
@@ -77,6 +94,25 @@ task1(() => {
     });
   });
 });
+
+// OUTPUT SEQUENCE (each task waits 500ms before starting):
+// After 500ms:  Task 1 completed
+// After 1000ms: Task 2 completed
+// After 1500ms: Task 3 completed
+// After 2000ms: Task 4 completed
+// 
+// Total time: ~2000ms (2 seconds)
+// 
+// Notice the PYRAMID SHAPE - This is Callback Hell!
+// ┌─────────────────────────────────────┐
+// │  task1(() => {                      │
+// │    task2(() => {                    │
+// │      task3(() => {                  │
+// │        task4();                     │
+// │      });                            │
+// │    });                              │
+// │  });                                │
+// └─────────────────────────────────────┘
 
 console.log("\n--- Why Callbacks Are Problematic ---");
 console.log("1. Callback Hell: Deeply nested code (hard to read)");
