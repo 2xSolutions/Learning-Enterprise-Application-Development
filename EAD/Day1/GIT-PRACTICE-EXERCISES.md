@@ -6,7 +6,7 @@ Use these exercises to practice git commands. Create a practice repository and t
 
 ```bash
 # Create practice folder
-mkdir git-practice
+mkdir git-practice  
 cd git-practice
 
 # Initialize git
