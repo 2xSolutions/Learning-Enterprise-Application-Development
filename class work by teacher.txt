@@ -1,0 +1,192 @@
+
+
+// function getData(callback){
+//     setTimeout(() => {
+//         let data = 'Data from the server.';
+//         callback(data)
+//     }, 1000)
+// }
+
+
+// function getCategories(callback){
+//     setTimeout(() => {
+//         let categories = [
+//             {id: 1, name: 'Kids'},
+//             {id: 2, name: 'Electronics'},
+//             {id: 3, name: 'Fashion'},
+//         ];
+//         callback(categories)
+//     }, 1000)
+// }
+
+// function getProducts(categoryId, callback){
+//     setTimeout(() => {
+//         let products = [
+//             {id: 1, name: 'Product 1', categoryId: 1},
+//             {id: 2, name: 'Product 2', categoryId: 1},
+//             {id: 3, name: 'Product 3', categoryId: 2},
+//             {id: 4, name: 'Product 4', categoryId: 3},
+//             {id: 5, name: 'Product 5', categoryId: 3},
+//         ];
+//         const filteredProducts = products.filter(product => product.categoryId === categoryId);
+//         callback(filteredProducts)
+//     }, 5000)
+// }
+
+
+// getData(function (data){
+//     console.log('DATA: ', data)
+// })
+
+// getCategories(function(categories){
+//     console.log('CATEGORIES: ', categories);
+//     const firstCategory = categories?.[0];
+//     if(firstCategory){
+//         getProducts(firstCategory.id, function(products){
+//             console.log('PRODUCTS of ', firstCategory.name, ': ', products)
+//             const firstProduct = products?.[0];
+//             if(firstProduct){
+//                 getProductDetails(firstProduct.id, function(productDetails){
+//                     console.log('PRODUCT DETAILS of ', firstProduct.name, ': ', productDetails)
+//                 })
+//             }
+//         })
+//     }
+// })
+
+
+// Callback Hell: Promises
+// 3 States of a Promise
+// - Pending
+// - Fullfilled
+// - Rejected
+
+
+function getCategories(){
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            let categories = [
+                {id: 1, name: 'Kids'},
+                {id: 2, name: 'Electronics'},
+                {id: 3, name: 'Fashion'},
+            ];
+            if(categories.length){
+              resolve(categories)
+            } else {
+              reject(new Error('No categories found'))
+            }
+        }, 3000)
+    })
+}
+
+function getProducts(categoryId){
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            let products = [
+                {id: 1, name: 'Product 1', categoryId: 1, price: 100},
+                {id: 2, name: 'Product 2', categoryId: 1, price: 200},
+                {id: 3, name: 'Product 3', categoryId: 2, price: 300},
+                {id: 4, name: 'Product 4', categoryId: 3, price: 400},
+                {id: 5, name: 'Product 5', categoryId: 3, price: 500},
+            ]
+            const filteredProducts = products.filter(product => product.categoryId === categoryId);
+            if(filteredProducts.length){
+                resolve(filteredProducts)
+            } else {
+                reject(new Error('No products found for categoryId: ' + categoryId))
+            }
+        }, 3000)
+    })
+}
+
+
+
+// getCategories().then(categories =>{
+//     console.log('CATEGORIES: ', categories)
+//     const firstCategory = categories?.[0];
+//     // if(firstCategory){
+//     //     const productsPromise = getProducts(firstCategory.id);
+//     //     productsPromise.then(products =>{
+//     //         console.log('PRODUCTS of ', firstCategory.name, ': ', products)
+//     //     })
+//     //     .catch(error =>{
+//     //         console.log('ERROR: ', error)
+//     //     })
+//     // }
+
+//     return getProducts(firstCategory.id);
+// })
+// .then(products => {
+//     return products.map(product => {
+//         return {
+//             ...product,
+//             price: product.price * 1.1
+//         }
+//     })
+// })
+// .then(updatedProducts => {
+//     console.log('UPDATED PRODUCTS: ', updatedProducts)
+// })
+// .catch(error => {
+//     console.log('ERROR: ', error)
+// })
+
+function processData(){
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('Data from the server.')
+        }, 3000)
+    })
+}
+
+function saveData(data){
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('Data saved to the server.')
+        }, 2000)
+    })
+}
+
+function getDataFromEndpoint(){
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('Data from the endpoint.')
+        }, 4000)
+    })
+}
+
+
+ function callMe(){
+    return getDataFromEndpoint();
+}
+
+
+(async function() {
+
+    try{
+        console.log('Starting a program');
+
+    //     // const categories =  await getCategories();
+
+    //     // console.log('CATEGORIES: ', categories);
+
+    //     // const products = await getProducts(categories[0].id);
+
+    //     // console.log('PRODUCTS: ', products);
+
+    //    const [data, savedData, dataFromEndpoint] = await Promise.allSettled([processData(), saveData(), getDataFromEndpoint()])
+    //    console.log('DATA: ', data);
+    //    console.log('SAVED DATA: ', savedData);
+    //    console.log('DATA FROM ENDPOINT: ', dataFromEndpoint);
+
+    //    console.log('End of the program');
+    const result =  await callMe()
+    console.log('Call me: ', result);
+    }
+    catch(error){
+        console.log('ERROR: ', error)
+    }
+
+
+} )();
+ 
